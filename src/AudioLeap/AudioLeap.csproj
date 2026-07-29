@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- WinForms solo para NotifyIcon (system tray), sin ventanas WinForms -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>AudioLeap</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyTitle>AudioLeap</AssemblyTitle>
+    <Product>AudioLeap</Product>
+    <Version>1.1.0</Version>
+    <!-- Rendimiento y tamaño -->
+    <TieredPGO>true</TieredPGO>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- Permite compilar el target de Windows desde entornos no-Windows (CI) -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- Icono del exe (se genera automáticamente si falta; ver target GenerateIcon) -->
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- Genera app.ico con PowerShell si no existe todavía -->
+  <Target Name="GenerateIcon" BeforeTargets="BeforeBuild"
+          Condition="!Exists('$(ProjectDir)Assets\app.ico') And '$(OS)' == 'Windows_NT'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)Assets\make-icon.ps1&quot;" />
+  </Target>
+
+  <!-- UseWindowsForms añade usings globales que chocan con los tipos de WPF
+       (Application, Color, KeyEventArgs...). Se eliminan; TrayManager importa
+       System.Windows.Forms y System.Drawing explícitamente. -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+</Project>

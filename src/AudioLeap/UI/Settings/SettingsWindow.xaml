@@ -1,0 +1,193 @@
+<Window x:Class="AudioLeap.UI.Settings.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{DynamicResource L_SettingsTitle}"
+        Width="440" Height="640"
+        MinWidth="400" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Foreground="{DynamicResource WindowForegroundBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI"
+        FontSize="13">
+
+    <Window.Resources>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,18,0,8"/>
+        </Style>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style x:Key="HotkeyBox" TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="RowLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20,4,20,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource L_SectionHotkeys}"/>
+                <TextBlock Opacity="0.7" Margin="0,0,0,8" TextWrapping="Wrap"
+                           Text="{DynamicResource L_HotkeysHint}"/>
+
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_VolumeUp}"/>
+                        <TextBox x:Name="HkVolumeUp" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_VolumeDown}"/>
+                        <TextBox x:Name="HkVolumeDown" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Mute}"/>
+                        <TextBox x:Name="HkMute" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_NextDevice}"/>
+                        <TextBox x:Name="HkNextDevice" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_PrevDevice}"/>
+                        <TextBox x:Name="HkPrevDevice" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_ShowMixer}"/>
+                        <TextBox x:Name="HkShowMixer" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
+
+                <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource L_SectionOsd}"/>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Position}"/>
+                        <ComboBox x:Name="PositionCombo" Width="180" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Duration}"/>
+                        <Slider x:Name="DurationSlider" Grid.Column="1" Margin="14,0"
+                                Minimum="500" Maximum="5000" TickFrequency="100"
+                                IsSnapToTickEnabled="True" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" MinWidth="52" TextAlignment="Right"
+                                   Text="{Binding ElementName=DurationSlider, Path=Value, StringFormat={}{0:0} ms}"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Size}"/>
+                        <Slider x:Name="ScaleSlider" Grid.Column="1" Margin="14,0"
+                                Minimum="0.8" Maximum="1.5" TickFrequency="0.05"
+                                IsSnapToTickEnabled="True" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" MinWidth="52" TextAlignment="Right"
+                                   Text="{Binding ElementName=ScaleSlider, Path=Value, StringFormat={}{0:P0}}"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <CheckBox x:Name="AnimationsCheck" Content="{DynamicResource L_Animations}" VerticalAlignment="Center"/>
+                </Border>
+
+                <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource L_SectionDevices}"/>
+                <TextBlock Opacity="0.7" Margin="0,0,0,8" TextWrapping="Wrap"
+                           Text="{DynamicResource L_DevicesHint}"/>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel x:Name="DevicesPanel"/>
+                </Border>
+
+                <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource L_SectionGeneral}"/>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_VolumeStep}"/>
+                        <Slider x:Name="StepSlider" Grid.Column="1" Margin="14,0"
+                                Minimum="1" Maximum="10" TickFrequency="1"
+                                IsSnapToTickEnabled="True" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" VerticalAlignment="Center" MinWidth="52" TextAlignment="Right"
+                                   Text="{Binding ElementName=StepSlider, Path=Value, StringFormat={}{0:0} %}"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Theme}"/>
+                        <ComboBox x:Name="ThemeCombo" Width="180" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_Language}"/>
+                        <ComboBox x:Name="LanguageCombo" Width="180" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <CheckBox x:Name="StartupCheck" Content="{DynamicResource L_StartWithWindows}" VerticalAlignment="Center"/>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <CheckBox x:Name="CommsRoleCheck" VerticalAlignment="Center"
+                              Content="{DynamicResource L_CommsRole}"/>
+                </Border>
+
+                <!-- Marca de agua -->
+                <TextBlock Margin="0,20,0,4"
+                           HorizontalAlignment="Center"
+                           FontSize="11"
+                           Opacity="0.35"
+                           Text="SebastianJRomero"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button Content="{DynamicResource L_Cancel}" Width="96" Height="32" Margin="0,0,10,0" Click="OnCancelClick"/>
+            <Button Content="{DynamicResource L_Save}" Width="96" Height="32" Click="OnSaveClick"
+                    Background="{DynamicResource AccentBrush}" Foreground="White" BorderThickness="0"/>
+        </StackPanel>
+    </Grid>
+</Window>
