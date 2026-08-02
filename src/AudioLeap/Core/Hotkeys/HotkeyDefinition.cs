@@ -2,7 +2,7 @@ using System.Windows.Input;
 
 namespace AudioLeap.Core.Hotkeys;
 
-public enum HotkeyAction { VolumeUp, VolumeDown, ToggleMute, NextDevice, PreviousDevice, ShowMixer }
+public enum HotkeyAction { VolumeUp, VolumeDown, ToggleMute, NextDevice, PreviousDevice, ShowMixer, ShowAppMixer }
 
 /// <summary>
 /// Combinación de teclas serializable como texto ("Win+Alt+Up").

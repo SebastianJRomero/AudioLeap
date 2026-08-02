@@ -8,6 +8,7 @@ Cambio instantáneo de dispositivo de salida (siguiente/anterior o selección di
 
 - **Idioma configurable** — interfaz en español o inglés, con selector en la configuración.
 - **Dispositivos personalizables** — nombre e icono propios por dispositivo (parlantes, audífonos, TV, Bluetooth, etc.). El nombre real de Windows se conserva y solo se muestra en la configuración; en el OSD, el mezclador y el tray aparece el nombre y el icono personalizados.
+- **Mezclador de aplicaciones** — panel con el volumen de cada aplicación que está reproduciendo audio (con su icono real), volumen y silencio por app. Se abre con su propio atajo.
 
 ## Atajos por defecto
 
@@ -17,6 +18,7 @@ Cambio instantáneo de dispositivo de salida (siguiente/anterior o selección di
 | Bajar volumen | `Ctrl + F11` |
 | Silenciar | `Ctrl + F10` |
 | Mezclador de dispositivos | `Ctrl + F9` |
+| Mezclador de aplicaciones | `Ctrl + F8` |
 | Siguiente dispositivo | *(sin asignar)* |
 | Dispositivo anterior | *(sin asignar)* |
 
@@ -65,7 +67,8 @@ src/AudioLeap/
 │   └── Theme/               # ThemeManager (claro/oscuro + acento)
 ├── Interop/                 # P/Invoke de ventana (topmost, no-activate, acrílico)
 └── UI/
-    ├── Common/              # Glifos e iconos de dispositivo compartidos
+    ├── AppMixer/            # Mezclador de aplicaciones (volumen por app)
+    ├── Common/              # Glifos, iconos y estilos compartidos
     ├── Mixer/               # Mezclador de dispositivos (volumen por dispositivo)
     ├── Osd/                 # OsdWindow + OsdManager (animaciones, posicionamiento)
     ├── Settings/            # Ventana de configuración

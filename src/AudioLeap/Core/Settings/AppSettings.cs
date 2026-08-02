@@ -14,6 +14,7 @@ public sealed class AppSettings
     public string HotkeyNextDevice { get; set; } = "";
     public string HotkeyPreviousDevice { get; set; } = "";
     public string HotkeyShowMixer { get; set; } = "Ctrl+F9";
+    public string HotkeyShowAppMixer { get; set; } = "Ctrl+F8";
 
     // OSD
     public OsdPosition OsdPosition { get; set; } = OsdPosition.BottomCenter;

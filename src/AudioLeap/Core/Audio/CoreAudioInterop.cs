@@ -157,3 +157,88 @@ internal interface IMMNotificationClient
     void OnDefaultDeviceChanged(EDataFlow flow, ERole role, [MarshalAs(UnmanagedType.LPWStr)] string? deviceId);
     void OnPropertyValueChanged([MarshalAs(UnmanagedType.LPWStr)] string deviceId, PropertyKey key);
 }
+
+// ── Audio Session API (volumen por aplicación) ───────────────────────────────
+// Se activa IAudioSessionManager2 desde el IMMDevice del dispositivo de salida.
+// El orden del vtable (incluidos los métodos heredados) es crítico.
+
+internal enum AudioSessionState { Inactive = 0, Active = 1, Expired = 2 }
+
+[ComImport, Guid("77AA99A0-1BD6-484F-8BC7-2C654C9A9B6F"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IAudioSessionManager2
+{
+    // Heredados de IAudioSessionManager (deben ir primero en el vtable).
+    int GetAudioSessionControl(IntPtr audioSessionGuid, uint streamFlags, out IAudioSessionControl sessionControl);
+    int GetSimpleAudioVolume(IntPtr audioSessionGuid, uint streamFlags, out ISimpleAudioVolume audioVolume);
+    // Propios de IAudioSessionManager2.
+    int GetSessionEnumerator(out IAudioSessionEnumerator sessionEnum);
+    int RegisterSessionNotification(IAudioSessionNotification sessionNotification);
+    int UnregisterSessionNotification(IAudioSessionNotification sessionNotification);
+    int RegisterDuckNotification([MarshalAs(UnmanagedType.LPWStr)] string sessionId, IntPtr duckNotification);
+    int UnregisterDuckNotification(IntPtr duckNotification);
+}
+
+[ComImport, Guid("E2F5BB11-0570-40CA-ACDD-3AA01277DEE8"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IAudioSessionEnumerator
+{
+    int GetCount(out int sessionCount);
+    int GetSession(int sessionIndex, out IAudioSessionControl session);
+}
+
+[ComImport, Guid("F4B1A599-7266-4319-A8CA-E70ACB11E8CD"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IAudioSessionControl
+{
+    int GetState(out AudioSessionState state);
+    int GetDisplayName([MarshalAs(UnmanagedType.LPWStr)] out string name);
+    int SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid eventContext);
+    int GetIconPath([MarshalAs(UnmanagedType.LPWStr)] out string path);
+    int SetIconPath([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid eventContext);
+    int GetGroupingParam(out Guid groupingParam);
+    int SetGroupingParam(ref Guid groupingParam, ref Guid eventContext);
+    int RegisterAudioSessionNotification(IntPtr newNotifications);
+    int UnregisterAudioSessionNotification(IntPtr newNotifications);
+}
+
+// Deriva de IAudioSessionControl: repetir sus métodos antes de los propios.
+[ComImport, Guid("BFB7FF88-7239-4FC9-8FA2-07C950BE9C6D"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IAudioSessionControl2
+{
+    int GetState(out AudioSessionState state);
+    int GetDisplayName([MarshalAs(UnmanagedType.LPWStr)] out string name);
+    int SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid eventContext);
+    int GetIconPath([MarshalAs(UnmanagedType.LPWStr)] out string path);
+    int SetIconPath([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid eventContext);
+    int GetGroupingParam(out Guid groupingParam);
+    int SetGroupingParam(ref Guid groupingParam, ref Guid eventContext);
+    int RegisterAudioSessionNotification(IntPtr newNotifications);
+    int UnregisterAudioSessionNotification(IntPtr newNotifications);
+    // Propios de IAudioSessionControl2.
+    int GetSessionIdentifier([MarshalAs(UnmanagedType.LPWStr)] out string retVal);
+    int GetSessionInstanceIdentifier([MarshalAs(UnmanagedType.LPWStr)] out string retVal);
+    int GetProcessId(out uint retVal);
+    [PreserveSig] int IsSystemSoundsSession(); // S_OK (0) = sí; S_FALSE (1) = no
+    int SetDuckingPreference([MarshalAs(UnmanagedType.Bool)] bool optOut);
+}
+
+[ComImport, Guid("87CE5498-68D6-44E5-9215-6DA47EF883D8"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface ISimpleAudioVolume
+{
+    int SetMasterVolume(float levelScalar, ref Guid eventContext);
+    int GetMasterVolume(out float levelScalar);
+    int SetMute([MarshalAs(UnmanagedType.Bool)] bool mute, ref Guid eventContext);
+    int GetMute([MarshalAs(UnmanagedType.Bool)] out bool mute);
+}
+
+// Declarada para completar el vtable de IAudioSessionManager2; su uso (eventos de
+// sesión en vivo) queda para una fase posterior.
+[ComImport, Guid("641DD20B-4D41-49CC-ABA3-174B9477BB08"),
+ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+internal interface IAudioSessionNotification
+{
+    int OnSessionCreated(IAudioSessionControl newSession);
+}

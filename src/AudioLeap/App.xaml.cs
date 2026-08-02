@@ -7,6 +7,7 @@ using AudioLeap.Core.Hotkeys;
 using AudioLeap.Core.Localization;
 using AudioLeap.Core.Settings;
 using AudioLeap.Core.Theme;
+using AudioLeap.UI.AppMixer;
 using AudioLeap.UI.Mixer;
 using AudioLeap.UI.Osd;
 using AudioLeap.UI.Settings;
@@ -19,9 +20,11 @@ public partial class App : Application
     private Mutex? _singleInstanceMutex;
     private SettingsManager _settings = null!;
     private AudioService _audio = null!;
+    private AppAudioService _appAudio = null!;
     private HotkeyManager _hotkeys = null!;
     private OsdManager _osd = null!;
     private MixerManager _mixer = null!;
+    private AppMixerManager _appMixer = null!;
     private TrayManager _tray = null!;
     private ThemeManager _theme = null!;
     private SettingsWindow? _settingsWindow;
@@ -38,8 +41,10 @@ public partial class App : Application
         _settings = new SettingsManager();
         _theme = new ThemeManager();
         _audio = new AudioService();
+        _appAudio = new AppAudioService();
         _osd = new OsdManager(_settings.Current);
         _mixer = new MixerManager(_audio, _settings.Current);
+        _appMixer = new AppMixerManager(_appAudio, _settings.Current);
         _hotkeys = new HotkeyManager();
         _tray = new TrayManager(_audio);
 
@@ -73,6 +78,7 @@ public partial class App : Application
             Loc.Apply(s.Language);
             _osd.UpdateSettings(s);
             _mixer.UpdateSettings(s);
+            _appMixer.UpdateSettings(s);
             _theme.Apply(s.Theme);
             _audio.AlsoSetCommunicationsRole = s.AlsoSetCommunicationsRole;
             _audio.ExcludedDeviceIds = new HashSet<string>(s.ExcludedDeviceIds);
@@ -95,6 +101,12 @@ public partial class App : Application
         if (action == HotkeyAction.ShowMixer)
         {
             _mixer.Toggle();
+            return;
+        }
+
+        if (action == HotkeyAction.ShowAppMixer)
+        {
+            _appMixer.Toggle();
             return;
         }
 
@@ -128,6 +140,7 @@ public partial class App : Application
         Add(HotkeyAction.NextDevice, s.HotkeyNextDevice);
         Add(HotkeyAction.PreviousDevice, s.HotkeyPreviousDevice);
         Add(HotkeyAction.ShowMixer, s.HotkeyShowMixer);
+        Add(HotkeyAction.ShowAppMixer, s.HotkeyShowAppMixer);
 
         var failed = _hotkeys.RegisterAll(map);
         if (failed.Count > 0)
@@ -158,7 +171,9 @@ public partial class App : Application
         _hotkeys?.Dispose();
         _osd?.Dispose();
         _mixer?.Dispose();
+        _appMixer?.Dispose();
         _audio?.Dispose();
+        _appAudio?.Dispose();
         _theme?.Dispose();
         _singleInstanceMutex?.Dispose();
         base.OnExit(e);

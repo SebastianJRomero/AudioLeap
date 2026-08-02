@@ -89,6 +89,13 @@
                                  PreviewKeyDown="OnHotkeyBoxKeyDown"/>
                     </Grid>
                 </Border>
+                <Border Style="{StaticResource Card}">
+                    <Grid>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource L_ShowAppMixer}"/>
+                        <TextBox x:Name="HkShowAppMixer" Style="{StaticResource HotkeyBox}"
+                                 PreviewKeyDown="OnHotkeyBoxKeyDown"/>
+                    </Grid>
+                </Border>
 
                 <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource L_SectionOsd}"/>
                 <Border Style="{StaticResource Card}">
