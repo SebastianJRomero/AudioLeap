@@ -83,14 +83,17 @@ con la lógica común de posicionamiento y auto-ocultado (hoy repetida entre `Os
 
 ## Fases (commits sugeridos)
 
-1. Interop de la Audio Session API en `CoreAudioInterop.cs`.
-2. `AppAudioService` + `AppAudioSession`: enumerar y get/set de volumen y silencio (sin eventos aún).
-3. `AppMixerWindow` + `AppMixerManager`: instantánea al abrir, reutilizando estilos del mezclador.
-4. Atajo `ShowAppMixer` + configuración + localización.
-5. Extracción y caché de iconos de aplicación.
-6. Eventos de sesión en vivo (crear/expirar/volumen/silencio) → filas que se actualizan sin *polling*.
-7. Agrupar sesiones del mismo proceso (p. ej. varias pestañas) y fila de "Sonidos del sistema".
-8. Pulido: animaciones, estado vacío, y actualización de `README.md` / `ARCHITECTURE.md`.
+- [x] 1. Interop de la Audio Session API en `CoreAudioInterop.cs`.
+- [x] 2. `AppAudioService` + `AppAudioSession`: enumerar y get/set de volumen y silencio (sin eventos aún).
+- [x] 3. `AppMixerWindow` + `AppMixerManager`: instantánea al abrir, reutilizando estilos del mezclador.
+- [x] 4. Atajo `ShowAppMixer` (`Ctrl+F8`) + configuración + localización.
+- [x] 5. Extracción y caché de iconos de aplicación.
+- [ ] 6. Eventos de sesión en vivo (crear/expirar/volumen/silencio) → filas que se actualizan sin *polling*.
+- [x] 7. Agrupar sesiones del mismo proceso (p. ej. varias pestañas) y fila de "Sonidos del sistema".
+- [~] 8. Pulido: animaciones y estado vacío hechos; falta un icono de app en el tray/OSD si se desea.
+
+La primera entrega (fases 1–5 y 7) reconstruye la lista **al abrir el panel**, igual que el mezclador de
+dispositivos. La fase 6 (actualización en vivo por eventos de sesión) queda como siguiente paso.
 
 ## Casos límite
 

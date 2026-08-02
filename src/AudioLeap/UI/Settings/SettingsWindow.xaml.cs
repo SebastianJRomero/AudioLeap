@@ -167,6 +167,7 @@ public partial class SettingsWindow : Window
         HkNextDevice.Text = s.HotkeyNextDevice;
         HkPrevDevice.Text = s.HotkeyPreviousDevice;
         HkShowMixer.Text = s.HotkeyShowMixer;
+        HkShowAppMixer.Text = s.HotkeyShowAppMixer;
 
         PositionCombo.SelectedIndex = Array.FindIndex(Positions, p => p.Value == s.OsdPosition);
         DurationSlider.Value = s.OsdDurationMs;
@@ -215,6 +216,7 @@ public partial class SettingsWindow : Window
             (HkVolumeUp.Text, Loc.T("VolumeUp")), (HkVolumeDown.Text, Loc.T("VolumeDown")),
             (HkMute.Text, Loc.T("Mute")), (HkNextDevice.Text, Loc.T("NextDevice")),
             (HkPrevDevice.Text, Loc.T("PrevDevice")), (HkShowMixer.Text, Loc.T("ShowMixer")),
+            (HkShowAppMixer.Text, Loc.T("ShowAppMixer")),
         })
         {
             if (!string.IsNullOrWhiteSpace(text) && !HotkeyDefinition.TryParse(text, out _))
@@ -254,6 +256,7 @@ public partial class SettingsWindow : Window
             HotkeyNextDevice = HkNextDevice.Text,
             HotkeyPreviousDevice = HkPrevDevice.Text,
             HotkeyShowMixer = HkShowMixer.Text,
+            HotkeyShowAppMixer = HkShowAppMixer.Text,
             OsdPosition = Positions[Math.Max(0, PositionCombo.SelectedIndex)].Value,
             OsdDurationMs = (int)DurationSlider.Value,
             OsdScale = Math.Round(ScaleSlider.Value, 2),

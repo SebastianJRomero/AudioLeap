@@ -37,12 +37,14 @@ Alternativas descartadas: **C++/Win32** (mínimo consumo pero animaciones y mant
 | Módulo | Carpeta | Responsabilidad |
 |---|---|---|
 | **AudioService** | `Core/Audio` | Enumerar dispositivos activos, cambiar dispositivo predeterminado (IPolicyConfig), volumen/mute (IAudioEndpointVolume), notificaciones de cambios (IMMNotificationClient). No conoce UI. |
+| **AppAudioService** | `Core/Audio` | Volumen/silencio por aplicación mediante la Audio Session API (IAudioSessionManager2/ISimpleAudioVolume). Enumera y agrupa por proceso las sesiones del dispositivo predeterminado. No conoce UI. |
 | **CoreAudioInterop** | `Core/Audio` | Declaraciones COM puras (IMMDeviceEnumerator, IPolicyConfig, etc.). Sin lógica. |
 | **HotkeyManager** | `Core/Hotkeys` | Atajos globales vía `RegisterHotKey` sobre una ventana message-only. Expone eventos por acción. Re-registrable en caliente al cambiar configuración. |
 | **SettingsManager** | `Core/Settings` | Carga/guarda `%APPDATA%\AudioLeap\settings.json`. Evento `SettingsChanged` al que se suscriben los demás módulos. |
 | **StartupManager** | `Core/Settings` | Alta/baja en `HKCU\...\Run` para inicio con Windows. |
 | **ThemeManager** | `Core/Theme` | Detecta tema claro/oscuro y color de acento; publica brushes como recursos de aplicación; reacciona a cambios del sistema. |
 | **OsdManager / OsdWindow** | `UI/Osd` | Ventana flotante topmost sin foco (WS_EX_NOACTIVATE), animaciones de entrada/salida y de barra, auto-ocultado con temporizador, posición/escala/duración configurables. |
+| **AppMixerManager / AppMixerWindow** | `UI/AppMixer` | Panel flotante con el volumen de cada aplicación (icono real de la app, deslizador y silencio). Mismo comportamiento de posicionamiento y auto-ocultado que el mezclador de dispositivos. |
 | **TrayManager** | `UI/Tray` | Icono en el área de notificación, menú con lista de dispositivos, acceso a configuración y salida. |
 | **SettingsWindow** | `UI/Settings` | Ventana de configuración (atajos, OSD, tema, inicio con Windows). |
 | **WindowInterop** | `Interop` | P/Invoke de ventanas: topmost real, no-activación, esquinas redondeadas DWM, blur acrílico opcional. |

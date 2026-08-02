@@ -3,14 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
-        <!-- Valores iniciales; ThemeManager los reemplaza al arrancar y al cambiar el tema del sistema -->
-        <SolidColorBrush x:Key="OsdBackgroundBrush" Color="#F2202020"/>
-        <SolidColorBrush x:Key="OsdForegroundBrush" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="OsdSecondaryBrush" Color="#FFB0B0B0"/>
-        <SolidColorBrush x:Key="OsdTrackBrush" Color="#66FFFFFF"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#FF0078D4"/>
-        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FF202020"/>
-        <SolidColorBrush x:Key="WindowForegroundBrush" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="CardBrush" Color="#FF2B2B2B"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="UI/Common/FlyoutStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Valores iniciales; ThemeManager los reemplaza al arrancar y al cambiar el tema del sistema -->
+            <SolidColorBrush x:Key="OsdBackgroundBrush" Color="#F2202020"/>
+            <SolidColorBrush x:Key="OsdForegroundBrush" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="OsdSecondaryBrush" Color="#FFB0B0B0"/>
+            <SolidColorBrush x:Key="OsdTrackBrush" Color="#66FFFFFF"/>
+            <SolidColorBrush x:Key="AccentBrush" Color="#FF0078D4"/>
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FF202020"/>
+            <SolidColorBrush x:Key="WindowForegroundBrush" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="CardBrush" Color="#FF2B2B2B"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

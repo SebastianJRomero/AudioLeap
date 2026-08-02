@@ -50,7 +50,7 @@ public sealed class HotkeyManager : IDisposable
             uint mods = ToNativeModifiers(def.Modifiers);
             // Volumen debe repetir al mantener pulsado; el resto no.
             if (action is HotkeyAction.ToggleMute or HotkeyAction.NextDevice
-                or HotkeyAction.PreviousDevice or HotkeyAction.ShowMixer)
+                or HotkeyAction.PreviousDevice or HotkeyAction.ShowMixer or HotkeyAction.ShowAppMixer)
                 mods |= MOD_NOREPEAT;
             uint vk = (uint)KeyInterop.VirtualKeyFromKey(def.Key);
 

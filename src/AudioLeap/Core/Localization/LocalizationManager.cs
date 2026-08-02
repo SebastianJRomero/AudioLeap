@@ -21,6 +21,7 @@ public static class Loc
         ["NextDevice"] = "Siguiente dispositivo",
         ["PrevDevice"] = "Dispositivo anterior",
         ["ShowMixer"] = "Mostrar mezclador",
+        ["ShowAppMixer"] = "Mezclador de aplicaciones",
         ["SectionOsd"] = "OSD",
         ["Position"] = "Posición",
         ["Duration"] = "Duración",
@@ -63,6 +64,9 @@ public static class Loc
 
         // Tray y mezclador
         ["OutputDevices"] = "Dispositivos de salida",
+        ["AppMixerTitle"] = "Volumen de aplicaciones",
+        ["AppMixerEmpty"] = "No hay aplicaciones reproduciendo audio.",
+        ["SystemSounds"] = "Sonidos del sistema",
         ["TraySettings"] = "Configuración…",
         ["TrayExit"] = "Salir",
         ["HotkeysBusy"] = "Algunos atajos están ocupados por otra aplicación y no se pudieron registrar.",
@@ -80,6 +84,7 @@ public static class Loc
         ["NextDevice"] = "Next device",
         ["PrevDevice"] = "Previous device",
         ["ShowMixer"] = "Show mixer",
+        ["ShowAppMixer"] = "App volume mixer",
         ["SectionOsd"] = "OSD",
         ["Position"] = "Position",
         ["Duration"] = "Duration",
@@ -122,6 +127,9 @@ public static class Loc
 
         // Tray and mixer
         ["OutputDevices"] = "Output devices",
+        ["AppMixerTitle"] = "App volume",
+        ["AppMixerEmpty"] = "No applications are playing audio.",
+        ["SystemSounds"] = "System sounds",
         ["TraySettings"] = "Settings…",
         ["TrayExit"] = "Exit",
         ["HotkeysBusy"] = "Some shortcuts are in use by another application and could not be registered.",
