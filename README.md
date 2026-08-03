@@ -74,7 +74,3 @@ src/AudioLeap/
     ├── Settings/            # Ventana de configuración
     └── Tray/                # Icono y menú del área de notificación
 ```
-
-## Licencia
-
-[MIT](LICENSE).
